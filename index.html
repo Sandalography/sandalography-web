@@ -3,93 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sandalography | Art, Culture & AI</title>
-    <style>
-        /* CSS: The "Style" of your website */
-        :root {
-            --bg-color: #121212; /* Dark background */
-            --text-color: #e0e0e0;
-            --accent-color: #c29b61; /* Sandalwood Gold */
-            --secondary-bg: #1e1e1e;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
-        header {
-            text-align: center;
-            padding: 4rem 2rem;
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1545231027-637d2f6210f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80');
-            background-size: cover;
-            border-bottom: 4px solid var(--accent-color);
-        }
-        h1 { font-size: 3.5rem; margin: 0; color: var(--accent-color); letter-spacing: 2px; }
-        .subtitle { font-size: 1.2rem; font-weight: 300; opacity: 0.9; margin-top: 10px; }
-        
-        /* The Main Container */
-        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
-        
-        /* Section Styling */
-        .section-title { border-left: 5px solid var(--accent-color); padding-left: 15px; margin-bottom: 20px; }
-        
-        /* Gallery Grid (The Moodboard) */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .card { background: var(--secondary-bg); border-radius: 8px; overflow: hidden; transition: transform 0.3s; }
-        .card:hover { transform: translateY(-5px); }
-        .card-img { width: 100%; height: 200px; background-color: #333; display: flex; align-items: center; justify-content: center; color: #555; }
-        .card-content { padding: 15px; }
-        .card-title { color: var(--accent-color); font-size: 1.1rem; font-weight: bold; margin-bottom: 5px; display: block; text-decoration: none;}
-        
-        footer { text-align: center; padding: 40px; font-size: 0.9rem; opacity: 0.6; border-top: 1px solid #333; margin-top: 50px;}
-        .social-link { color: var(--accent-color); text-decoration: none; margin: 0 10px; }
-    </style>
+    <title>Sandalography | The Digital Heritage</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Grotesk:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header>
-        <h1>SANDALOGRAPHY</h1>
-        <div class="subtitle">Curated by Chandan | Art • Architecture • AI</div>
+    <nav id="navbar">
+        <div class="logo">SANDALOGRAPHY</div>
+        <ul class="nav-links">
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#blog">Journal</a></li> <li><a href="#about">The Polymath</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <header id="hero">
+        <div class="hero-content">
+            <p class="subtitle">Ancient Roots. Future Vision.</p>
+            <h1 class="glitch-text">Preserving Heritage.<br>Architecting Tomorrow.</h1>
+            <a href="#about" class="cta-button">Explore the Vision</a>
+        </div>
+        <div class="hero-overlay"></div>
     </header>
 
-    <div class="container">
-        <section>
-            <h2 class="section-title">The Vision</h2>
-            <p>Welcome to my digital archive. I am a Polymath exploring the intersection of ancient heritage and future technology. Here, I document Art, Culture, and Architecture through the lens of modern AI.</p>
-        </section>
+    <section id="about" class="container">
+        <div class="section-header">
+            <span class="section-tag">01</span>
+            <h2>The Initiative</h2>
+        </div>
+        <div class="text-block">
+            <p>Sandalography is a digital exploration led by Chandan. Bridging the gap between the tactile history of our ancestors and the quantum possibilities of our future. Here, code meets canvas, and sandalwood meets silicon.</p>
+        </div>
+    </section>
 
-        <section style="margin-top: 50px;">
-            <h2 class="section-title">Latest Stuffs</h2>
-            <div class="grid">
-                <div class="card">
-                    <div class="card-img">Image Placeholder</div> <div class="card-content">
-                        <a href="#" class="card-title">Konark Sun Temple: An AI Restoration</a>
-                        <p>Exploring the geometric precision of ancient India using 3D scanning tools.</p>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-img">Image Placeholder</div>
-                    <div class="card-content">
-                        <a href="#" class="card-title">London Museums: A Visual Diary</a>
-                        <p>A weekend walk through history. Capturing the silence of stone.</p>
-                    </div>
+    <section id="gallery" class="container">
+        <div class="section-header">
+            <span class="section-tag">02</span>
+            <h2>Visual Archives</h2>
+        </div>
+        
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <div class="placeholder-img"></div>
+                <div class="overlay">
+                    <h3>Temple Architecture</h3>
+                    <p>Digital Restoration</p>
                 </div>
             </div>
-        </section>
-    </div>
+            <div class="gallery-item">
+                <div class="placeholder-img"></div>
+                <div class="overlay">
+                    <h3>Travel Diaries</h3>
+                    <p>Kyoto, Japan</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <div class="placeholder-img"></div>
+                <div class="overlay">
+                    <h3>AI Art Generation</h3>
+                    <p>Neural Style Transfer</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="blog" class="container">
+        <div class="section-header">
+            <span class="section-tag">03</span>
+            <h2>The Polymath Journal</h2>
+        </div>
+        <div class="blog-list">
+            <article class="blog-card">
+                <div class="card-content">
+                    <span class="date">Dec 22, 2025</span>
+                    <h3>The Intersection of AI and Archaeology</h3>
+                    <p>How NeRFs are changing the way we preserve ancient statues.</p>
+                    <a href="#" class="read-more">Read Entry <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+             <article class="blog-card">
+                <div class="card-content">
+                    <span class="date">Nov 10, 2025</span>
+                    <h3>Sandalwood: A Cultural Olfactory History</h3>
+                    <p>Exploring the roots of the name and the scent that defined an era.</p>
+                    <a href="#" class="read-more">Read Entry <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section id="contact" class="container">
+        <div class="section-header">
+            <span class="section-tag">04</span>
+            <h2>Connect</h2>
+        </div>
+        <div class="contact-wrapper">
+            <p class="contact-intro">Open for collaborations on Heritage Tech, AI, and Design.</p>
+            <div class="social-links">
+                <a href="#" target="_blank" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" target="_blank" class="social-icon"><i class="fab fa-linkedin"></i></a>
+                <a href="#" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" target="_blank" class="social-icon"><i class="fab fa-github"></i></a>
+            </div>
+            <p class="email">hello@sandalography.com</p>
+        </div>
+    </section>
 
     <footer>
-        <p>&copy; 2025 Sandalography. All rights reserved.</p>
-        <p>
-            <a href="#" class="social-link">Instagram</a> • 
-            <a href="#" class="social-link">LinkedIn</a> • 
-            <a href="#" class="social-link">X (Twitter)</a>
-        </p>
+        <p>&copy; 2025 Sandalography. Designed by The Architect.</p>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
