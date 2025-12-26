@@ -1,145 +1,202 @@
-/* --- CSS VARIABLES (Keep same) --- */
+/* --- VARIABLES & RESET --- */
 :root {
-    --bg: #121212;
-    --surface: #1e1e1e;
-    --text-main: #e0e0e0;
-    --text-muted: #a0a0a0;
-    --gold: #c29b61;
-    --gold-hover: #d4b075;
-    --font-heading: 'Playfair Display', serif;
+    --bg-color: #0a0a0a;       /* Deep Obsidian */
+    --text-color: #e0e0e0;     /* Soft White */
+    --accent-color: #c2a278;   /* Sandalwood Gold */
+    --font-head: 'Cinzel', serif;
     --font-body: 'Space Grotesk', sans-serif;
+    --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* --- RESET & BASE --- */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-    background-color: var(--bg);
-    color: var(--text-main);
-    font-family: var(--font-body);
-    line-height: 1.6;
-    overflow-x: hidden;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-a { text-decoration: none; color: inherit; transition: color 0.3s ease; }
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: var(--transition);
+}
+
 ul { list-style: none; }
+
+/* --- TYPOGRAPHY --- */
+h1, h2, h3 {
+    font-family: var(--font-head);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.gold { color: var(--accent-color); }
 
 /* --- NAVIGATION --- */
 nav {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    padding: 2rem 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    z-index: 1000;
-    background: rgba(18, 18, 18, 0.95); /* Always dark bg for readability */
-    border-bottom: 1px solid rgba(194, 155, 97, 0.1);
+    padding: 2rem 5%;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 100;
+    background: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur(10px);
 }
-.logo a {
-    font-family: var(--font-body);
-    font-weight: 700;
-    letter-spacing: 2px;
-    font-size: 1.2rem;
-    color: var(--gold);
-}
-.nav-links { display: flex; gap: 2rem; }
-.nav-links a { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
-.nav-links a:hover, .nav-links a.active { color: var(--gold); }
-.menu-toggle { display: none; }
 
-/* --- HERO SECTION (HOME ONLY) --- */
-#hero {
+.logo {
+    font-family: var(--font-head);
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+}
+
+.nav-links { display: flex; gap: 3rem; }
+
+.nav-links a {
+    font-size: 0.9rem;
+    position: relative;
+    opacity: 0.7;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    opacity: 1;
+    color: var(--accent-color);
+}
+
+/* --- HERO SECTION --- */
+.hero {
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
-    padding: 0 1rem;
+    position: relative;
+    overflow: hidden;
+    padding-top: 80px;
 }
-.subtitle {
-    color: var(--gold);
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    font-size: 0.9rem;
-    margin-bottom: 1.5rem;
-}
-h1 {
-    font-family: var(--font-heading);
-    font-size: 4rem;
-    line-height: 1.1;
-    margin-bottom: 2rem;
-}
-.cta-button {
-    display: inline-block;
-    padding: 1rem 2rem;
-    border: 1px solid var(--gold);
-    color: var(--gold);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-size: 0.8rem;
-    transition: all 0.3s ease;
-}
-.cta-button:hover { background: var(--gold); color: var(--bg); }
 
-/* --- PAGE HEADER (FOR SUB-PAGES) --- */
-.page-header {
-    height: 50vh; /* Shorter than home hero */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.hero-content {
+    position: relative;
+    z-index: 2;
     text-align: center;
-    background: radial-gradient(circle at center, #1f1f1f 0%, #121212 70%);
-    border-bottom: 1px solid rgba(194, 155, 97, 0.2);
+    max-width: 800px;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    opacity: 0.8;
+}
+
+.hero-image-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0.3; /* Darkens the image so text pops */
+    filter: grayscale(100%); /* Adds the 'minimal' vibe */
+}
+
+.hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 /* --- SECTIONS --- */
-.container { padding: 6rem 10%; min-height: 60vh; }
-.narrow { padding: 6rem 20%; } /* Thinner column for reading text */
-.section-header {
-    margin-bottom: 4rem;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    padding-bottom: 1rem;
-    display: flex;
-    align-items: baseline;
-    gap: 1rem;
-}
-.section-tag { color: var(--gold); font-weight: 600; }
-h2 { font-family: var(--font-heading); font-size: 2.5rem; font-weight: 400; }
+.section-padding { padding: 8rem 5%; }
+.container { max-width: 1200px; margin: 0 auto; }
 
-/* --- BLOG LIST --- */
-.blog-card {
-    background: var(--surface);
-    padding: 2rem;
-    margin-bottom: 2rem;
-    border-left: 3px solid transparent;
-    transition: all 0.3s ease;
+.section-title {
+    font-size: 2rem;
+    margin-bottom: 3rem;
+    border-left: 3px solid var(--accent-color);
+    padding-left: 1rem;
 }
-.blog-card:hover { border-left: 3px solid var(--gold); transform: translateX(10px); }
-.blog-card .date { font-size: 0.8rem; color: var(--gold); display: block; margin-bottom: 0.5rem; }
-.blog-card h3 { font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 1rem; }
-.read-more { display: inline-block; margin-top: 1rem; font-size: 0.9rem; color: var(--text-muted); }
-.read-more:hover { color: var(--gold); }
 
-/* --- GALLERY PLACEHOLDERS --- */
+/* --- VISION (Text + Image Layout) --- */
+.vision .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.vision-visual img {
+    width: 100%;
+    border-radius: 4px;
+    filter: sepia(20%) contrast(1.1);
+}
+
+/* --- GALLERY GRID --- */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
 .gallery-item {
+    display: block;
     position: relative;
-    background: var(--surface);
     overflow: hidden;
-    cursor: pointer;
 }
-.placeholder-img {
-    width: 100%; height: 100%; background: #252525;
+
+.img-wrapper {
+    overflow: hidden;
+    border-radius: 2px;
 }
-.overlay {
-    position: absolute; bottom: 0; left: 0; width: 100%;
-    padding: 1.5rem;
-    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+
+.gallery-item img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+    filter: grayscale(100%);
 }
-.overlay h3 { font-family: var(--font-heading); color: var(--gold); }
+
+.gallery-item:hover img {
+    transform: scale(1.05);
+    filter: grayscale(0%);
+}
+
+.caption {
+    margin-top: 1rem;
+}
+
+.caption h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+.caption p { font-size: 0.9rem; opacity: 0.7; }
 
 /* --- FOOTER --- */
 footer {
-    text-align: center; padding: 2rem; border-top: 1px solid #222;
-    font-size: 0.8rem; color: var(--text-muted);
+    padding: 4rem 5%;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    text-align: center;
+}
+
+.socials { margin-bottom: 1.5rem; }
+.socials a { margin: 0 1rem; font-family: var(--font-head); }
+.socials a:hover { color: var(--accent-color); }
+
+/* --- MOBILE RESPONSIVENESS --- */
+@media (max-width: 768px) {
+    .hero h1 { font-size: 2.5rem; }
+    .vision .container { grid-template-columns: 1fr; }
+    .nav-links { display: none; } /* Simplified mobile menu for v1 */
 }
