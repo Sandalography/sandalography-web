@@ -3,57 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sandalography | Home</title>
+    <title>Sandalography | Heritage & Horizon</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Grotesk:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Space+Grotesk:wght@300;400&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <nav>
-        <div class="logo"><a href="index.html">SANDALOGRAPHY</a></div>
+        <div class="logo">SANDALOGRAPHY</div>
+        <div class="menu-toggle" id="mobile-menu">
+            <span></span>
+            <span></span>
+        </div>
         <ul class="nav-links">
             <li><a href="index.html" class="active">Home</a></li>
-            <li><a href="blog.html">Journal</a></li>
-            <li><a href="about.html">The Polymath</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
-        <div class="menu-toggle"><i class="fas fa-bars"></i></div>
+            <li><a href="journal.html">Journal</a></li> <li><a href="contact.html">Contact</a></li> </ul>
     </nav>
 
-    <header id="hero">
+    <header class="hero">
         <div class="hero-content">
-            <p class="subtitle">Ancient Roots. Future Vision.</p>
-            <h1 class="glitch-text">Preserving Heritage.<br>Architecting Tomorrow.</h1>
-            <a href="about.html" class="cta-button">Enter The Museum</a>
+            <h1 class="reveal-text">Preserving the <span class="gold">Past</span>.<br>Architecting the <span class="gold">Future</span>.</h1>
+            <p class="subtitle reveal-text">A digital exploration of Art, Heritage, and Artificial Intelligence.</p>
         </div>
-        <div class="hero-overlay"></div>
+        <div class="hero-image-container">
+            <img src="https://images.unsplash.com/photo-1545249354-bc7098495679?q=80&w=1920&auto=format&fit=crop" alt="Ancient Aesthetic" class="hero-img parallax-img">
+        </div>
     </header>
 
-    <section class="container">
-        <div class="section-header">
-            <span class="section-tag">Latest</span>
-            <h2>From The Journal</h2>
+    <section class="vision section-padding">
+        <div class="container">
+            <div class="vision-text">
+                <h2 class="section-title">The Initiative</h2>
+                <p>Sandalography is a living archive. It is an experiment in using Neural Radiance Fields (NeRFs) and Generative AI to restore lost narratives. Here, we bridge the gap between ancient stone and silicon souls. Future updates will feature interactive 3D restorations and AI-driven storytelling.</p>
+            </div>
+            <div class="vision-visual">
+                <img src="https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=1000&auto=format&fit=crop" alt="Future Tech" class="parallax-img">
+            </div>
         </div>
-        <div class="blog-list">
-            <article class="blog-card">
-                <div class="card-content">
-                    <span class="date">Featured Entry</span>
-                    <h3>The Intersection of AI and Archaeology</h3>
-                    <p>How Neural Radiance Fields (NeRFs) are changing the way we preserve ancient statues.</p>
-                    <a href="blog.html" class="read-more">Read Full Story <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </article>
-        </div>
-        <div style="text-align: center; margin-top: 2rem;">
-            <a href="blog.html" class="cta-button">View All Entries</a>
+    </section>
+
+    <section class="journal-preview section-padding">
+        <div class="container">
+            <h2 class="section-title">Selected Works</h2>
+            <div class="gallery-grid">
+                <a href="journal.html" class="gallery-item">
+                    <div class="img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1599707367072-cd6ad66aa1a8?q=80&w=800&auto=format&fit=crop" alt="Travel Story">
+                    </div>
+                    <div class="caption">
+                        <h3>Travel Diaries</h3>
+                        <p>Wandering through history.</p>
+                    </div>
+                </a>
+                <a href="journal.html" class="gallery-item">
+                    <div class="img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=800&auto=format&fit=crop" alt="Art Piece">
+                    </div>
+                    <div class="caption">
+                        <h3>Art & Architecture</h3>
+                        <p>Decoding the aesthetics of old.</p>
+                    </div>
+                </a>
+                <a href="journal.html" class="gallery-item">
+                    <div class="img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop" alt="Abstract AI">
+                    </div>
+                    <div class="caption">
+                        <h3>The Polymath Log</h3>
+                        <p>Thoughts on convergence.</p>
+                    </div>
+                </a>
+            </div>
         </div>
     </section>
 
     <footer>
-        <p>&copy; 2025 Sandalography. Designed by The Architect.</p>
+        <div class="footer-content">
+            <div class="socials">
+                <a href="mailto:sandalocorporate@outlook.com">Email</a>
+                <a href="https://www.instagram.com/chandanpadhan10?igsh=N2lsb245ZHlyMHpu&utm_source=qr" target="_blank">Instagram</a>
+            </div>
+            <p>&copy; 2025 Sandalography. All rights reserved.</p>
+        </div>
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
