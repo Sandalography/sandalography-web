@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vlogs — Sandalography</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .vlogs-body { padding: 0 4rem 8rem; max-width: 1300px; margin: 0 auto; }
+
+  .vlogs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+  }
+
+  .vlog-card {
+    background: var(--bg2);
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    transition: background 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .vlog-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s;
+  }
+
+  .vlog-card:hover { background: var(--bg3); }
+  .vlog-card:hover::after { transform: scaleX(1); }
+
+  .vlog-thumb {
+    position: relative;
+    height: 280px;
+    background: linear-gradient(135deg, #1e1810 0%, #2a2015 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .vlog-card:nth-child(2) .vlog-thumb { background: linear-gradient(135deg, #0e1218 0%, #151c22 100%); }
+  .vlog-card:nth-child(3) .vlog-thumb { background: linear-gradient(135deg, #0e1510 0%, #161e18 100%); }
+  .vlog-card:nth-child(4) .vlog-thumb { background: linear-gradient(135deg, #18100e 0%, #221614 100%); }
+
+  .vlog-play {
+    width: 56px;
+    height: 56px;
+    border: 1px solid rgba(196,151,74,0.5);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    z-index: 2;
+  }
+
+  .vlog-card:hover .vlog-play {
+    background: rgba(196,151,74,0.15);
+    border-color: var(--gold);
+    transform: scale(1.1);
+  }
+
+  .vlog-play-icon {
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 16px solid var(--gold);
+    margin-left: 3px;
+  }
+
+  .vlog-thumb-label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  .vlog-duration {
+    position: absolute;
+    bottom: 10px;
+    right: 12px;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    color: var(--text);
+    background: rgba(12,11,9,0.8);
+    padding: 3px 8px;
+  }
+
+  .vlog-content { padding: 1.8rem 2rem 2rem; }
+
+  .vlog-tag {
+    font-size: 0.58rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .vlog-title {
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    font-weight: 300;
+    line-height: 1.3;
+    color: var(--text);
+    margin-top: 0.5rem;
+  }
+
+  .vlog-desc {
+    font-size: 0.75rem;
+    line-height: 1.8;
+    color: var(--text-muted);
+    margin-top: 0.6rem;
+  }
+
+  .vlog-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(74,70,64,0.25);
+  }
+
+  .vlog-date { font-size: 0.6rem; letter-spacing: 0.12em; color: var(--text-faint); }
+  .vlog-arrow { font-size: 0.68rem; color: var(--gold); transition: transform 0.3s; }
+  .vlog-card:hover .vlog-arrow { transform: translateX(5px); }
+
+  /* Upload note */
+  .upload-note {
+    background: var(--bg2);
+    border: 1px solid rgba(196,151,74,0.15);
+    padding: 2.5rem;
+    text-align: center;
+    margin-top: 2px;
+  }
+
+  .upload-note p {
+    font-family: var(--serif);
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .upload-note a {
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  @media (max-width: 900px) {
+    .vlogs-body { padding: 0 1.5rem 5rem; }
+    .vlogs-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">Sandalo<span>graphy</span></a>
+  <ul class="nav-links">
+    <li><a href="blog.html">Writings</a></li>
+    <li><a href="vlogs.html" class="active">Vlogs</a></li>
+    <li><a href="postcards.html">Postcards</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page-header reveal">
+  <span class="page-header-eyebrow">Moving image</span>
+  <h1 class="page-header-title">Vlogs &amp;<br><em>Videos</em></h1>
+  <p class="page-header-desc">Walking through galleries, streets, and moments worth capturing on film — slow, observational, personal.</p>
+</div>
+
+<div class="section-divider reveal" style="margin-top:0;"><span>All videos</span></div>
+
+<div class="vlogs-body reveal">
+  <div class="vlogs-grid">
+
+    <a class="vlog-card" href="#">
+      <div class="vlog-thumb">
+        <span class="vlog-thumb-label">[ Your video thumbnail ]</span>
+        <div class="vlog-play"><div class="vlog-play-icon"></div></div>
+        <span class="vlog-duration">12:34</span>
+      </div>
+      <div class="vlog-content">
+        <span class="vlog-tag">Museums</span>
+        <h2 class="vlog-title">A morning inside the British Museum</h2>
+        <p class="vlog-desc">Following the light through the Great Court and into the quieter galleries beyond — before the crowds arrive.</p>
+        <div class="vlog-meta">
+          <span class="vlog-date">March 2025</span>
+          <span class="vlog-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="vlog-card" href="#">
+      <div class="vlog-thumb">
+        <span class="vlog-thumb-label">[ Your video thumbnail ]</span>
+        <div class="vlog-play"><div class="vlog-play-icon"></div></div>
+        <span class="vlog-duration">08:19</span>
+      </div>
+      <div class="vlog-content">
+        <span class="vlog-tag">Castles</span>
+        <h2 class="vlog-title">Edinburgh in November: a short film</h2>
+        <p class="vlog-desc">Rain, stone walls, and the strange pleasure of being cold and far from home. Filmed over two days.</p>
+        <div class="vlog-meta">
+          <span class="vlog-date">February 2025</span>
+          <span class="vlog-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="vlog-card" href="#">
+      <div class="vlog-thumb">
+        <span class="vlog-thumb-label">[ Your video thumbnail ]</span>
+        <div class="vlog-play"><div class="vlog-play-icon"></div></div>
+        <span class="vlog-duration">15:02</span>
+      </div>
+      <div class="vlog-content">
+        <span class="vlog-tag">Travel</span>
+        <h2 class="vlog-title">24 hours in Paris: art, light, quiet streets</h2>
+        <p class="vlog-desc">A day moving between the Musée d'Orsay and the lesser-known corners of the city no guidebook mentions.</p>
+        <div class="vlog-meta">
+          <span class="vlog-date">January 2025</span>
+          <span class="vlog-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="vlog-card" href="#">
+      <div class="vlog-thumb">
+        <span class="vlog-thumb-label">[ Your video thumbnail ]</span>
+        <div class="vlog-play"><div class="vlog-play-icon"></div></div>
+        <span class="vlog-duration">06:48</span>
+      </div>
+      <div class="vlog-content">
+        <span class="vlog-tag">Nature</span>
+        <h2 class="vlog-title">Golden hour in the English countryside</h2>
+        <p class="vlog-desc">No narrative. Just late afternoon light on fields, hedgerows, and one very patient heron.</p>
+        <div class="vlog-meta">
+          <span class="vlog-date">December 2024</span>
+          <span class="vlog-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="upload-note">
+    <p>New vlogs are added regularly. <a href="https://www.instagram.com/chandanpadhan10" target="_blank">Follow on Instagram</a> for updates, or <a href="contact.html">get in touch</a> to be notified when something new is published.</p>
+  </div>
+</div>
+
+<footer>
+  <span class="footer-logo">Sandalography</span>
+  <ul class="footer-links">
+    <li><a href="https://www.instagram.com/chandanpadhan10" target="_blank">Instagram</a></li>
+    <li><a href="blog.html">Writings</a></li>
+    <li><a href="postcards.html">Postcards</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <span class="footer-copy">© 2025 Sandalography</span>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  reveals.forEach(r => observer.observe(r));
+</script>
+</body>
+</html>

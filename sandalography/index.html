@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sandalography — Art, Culture & Wandering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 640px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 4rem 5rem;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 70% 40%, rgba(120, 80, 20, 0.12) 0%, transparent 60%),
+      radial-gradient(ellipse at 20% 80%, rgba(60, 45, 20, 0.15) 0%, transparent 50%),
+      linear-gradient(160deg, #1a1610 0%, #0c0b09 50%, #0e0d0b 100%);
+  }
+
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    top: 18%;
+    right: 8%;
+    width: 1px;
+    height: 45vh;
+    background: linear-gradient(to bottom, transparent, var(--gold-pale) 40%, transparent);
+    opacity: 0.15;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+    animation: fadeUp 1.2s ease forwards;
+    opacity: 0;
+    animation-delay: 0.2s;
+  }
+
+  .hero-title {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(3.5rem, 8vw, 7.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    max-width: 780px;
+    animation: fadeUp 1.2s ease forwards;
+    opacity: 0;
+    animation-delay: 0.4s;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold-pale);
+  }
+
+  .hero-sub {
+    margin-top: 2rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    max-width: 380px;
+    line-height: 1.9;
+    animation: fadeUp 1.2s ease forwards;
+    opacity: 0;
+    animation-delay: 0.6s;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    animation: fadeUp 1.2s ease forwards;
+    opacity: 0;
+    animation-delay: 0.8s;
+    transition: gap 0.3s;
+  }
+
+  .hero-cta:hover { gap: 1.5rem; }
+
+  .hero-cta::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+    transition: width 0.3s;
+  }
+
+  .hero-cta:hover::after { width: 60px; }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    right: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    animation: fadeUp 1.2s ease forwards;
+    opacity: 0;
+    animation-delay: 1s;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(to bottom, var(--text-faint), transparent);
+    animation: scrollDrop 2s ease-in-out infinite;
+  }
+
+  /* ── INTRO ── */
+  .intro {
+    padding: 6rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 4rem;
+    align-items: start;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+
+  .intro-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    padding-top: 0.5rem;
+  }
+
+  .intro-text {
+    font-family: var(--serif);
+    font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--text);
+  }
+
+  .intro-text em {
+    font-style: italic;
+    color: var(--gold-pale);
+  }
+
+  /* ── SECTION NAV CARDS ── */
+  .section-nav {
+    padding: 1rem 4rem 6rem;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+
+  .section-nav-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+  }
+
+  .section-nav-card {
+    background: var(--bg2);
+    padding: 2.8rem 2.2rem;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 240px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+
+  .section-nav-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .section-nav-card:hover { background: var(--bg3); }
+  .section-nav-card:hover::after { transform: scaleX(1); }
+
+  .section-nav-num {
+    font-family: var(--serif);
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--text-faint);
+    line-height: 1;
+    transition: color 0.3s;
+  }
+
+  .section-nav-card:hover .section-nav-num { color: var(--gold); opacity: 0.4; }
+
+  .section-nav-bottom { }
+
+  .section-nav-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .section-nav-title {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--text);
+    display: block;
+    margin-bottom: 0.6rem;
+  }
+
+  .section-nav-desc {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    letter-spacing: 0.03em;
+  }
+
+  .section-nav-arrow {
+    display: inline-block;
+    margin-top: 1.2rem;
+    font-size: 0.68rem;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: transform 0.3s;
+  }
+
+  .section-nav-card:hover .section-nav-arrow { transform: translateX(6px); }
+
+  /* ── GALLERY ── */
+  .gallery {
+    padding: 2rem 4rem 6rem;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 12px;
+  }
+
+  .gallery-item { overflow: hidden; position: relative; cursor: pointer; }
+  .gallery-item:nth-child(1) { grid-column: 1 / 8; grid-row: 1; }
+  .gallery-item:nth-child(2) { grid-column: 8 / 13; grid-row: 1; }
+  .gallery-item:nth-child(3) { grid-column: 1 / 5; grid-row: 2; }
+  .gallery-item:nth-child(4) { grid-column: 5 / 9; grid-row: 2; }
+  .gallery-item:nth-child(5) { grid-column: 9 / 13; grid-row: 2; }
+
+  .gallery-placeholder {
+    width: 100%;
+    background: var(--bg3);
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding: 1rem 1.2rem;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .gallery-item:nth-child(1) .gallery-placeholder { height: 420px; }
+  .gallery-item:nth-child(2) .gallery-placeholder { height: 420px; }
+  .gallery-item:nth-child(3) .gallery-placeholder { height: 260px; }
+  .gallery-item:nth-child(4) .gallery-placeholder { height: 260px; }
+  .gallery-item:nth-child(5) .gallery-placeholder { height: 260px; }
+
+  .gallery-placeholder::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%);
+    z-index: 1;
+  }
+
+  .gallery-item:nth-child(1) .gallery-placeholder { background: linear-gradient(135deg, #1e1810 0%, #2a2015 40%, #1a1510 100%); }
+  .gallery-item:nth-child(2) .gallery-placeholder { background: linear-gradient(160deg, #0e1218 0%, #151c22 50%, #0c1015 100%); }
+  .gallery-item:nth-child(3) .gallery-placeholder { background: linear-gradient(120deg, #1c1510 0%, #241a0e 100%); }
+  .gallery-item:nth-child(4) .gallery-placeholder { background: linear-gradient(140deg, #12100e 0%, #1e1c18 100%); }
+  .gallery-item:nth-child(5) .gallery-placeholder { background: linear-gradient(155deg, #0e1510 0%, #161e18 100%); }
+
+  .gallery-item:hover .gallery-placeholder { transform: scale(1.03); }
+
+  .gallery-caption { position: relative; z-index: 2; }
+
+  .gallery-caption-loc {
+    font-size: 0.58rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 3px;
+  }
+
+  .gallery-caption-title {
+    font-family: var(--serif);
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: var(--text);
+    font-style: italic;
+  }
+
+  .gallery-placeholder::after {
+    content: attr(data-label);
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    text-align: center;
+    pointer-events: none;
+  }
+
+  /* ── POSTS ── */
+  .posts {
+    padding: 2rem 4rem 8rem;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 2px;
+  }
+
+  .post-card {
+    background: var(--bg2);
+    padding: 2.5rem;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 340px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .post-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+    transform-origin: left;
+  }
+
+  .post-card:hover { background: var(--bg3); }
+  .post-card:hover::before { transform: scaleX(1); }
+
+  .post-tag {
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .post-title {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    font-weight: 300;
+    line-height: 1.3;
+    color: var(--text);
+    margin-top: 1rem;
+  }
+
+  .post-card:nth-child(2) .post-title,
+  .post-card:nth-child(3) .post-title { font-size: 1.1rem; }
+
+  .post-excerpt {
+    font-size: 0.78rem;
+    line-height: 1.8;
+    color: var(--text-muted);
+    margin-top: 0.8rem;
+  }
+
+  .post-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid rgba(74,70,64,0.3);
+  }
+
+  .post-date { font-size: 0.62rem; letter-spacing: 0.15em; color: var(--text-faint); }
+
+  .post-arrow { font-size: 0.7rem; color: var(--gold); transition: transform 0.3s; }
+
+  .post-card:hover .post-arrow { transform: translateX(6px); }
+
+  /* ── QUOTE ── */
+  .quote-block {
+    padding: 7rem 4rem;
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .quote-mark {
+    font-family: var(--serif);
+    font-size: 5rem;
+    color: var(--gold);
+    opacity: 0.3;
+    line-height: 0.5;
+    display: block;
+    margin-bottom: 2rem;
+  }
+
+  .quote-text {
+    font-family: var(--serif);
+    font-size: clamp(1.3rem, 2.5vw, 1.9rem);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--text);
+  }
+
+  .quote-attr {
+    display: block;
+    margin-top: 2rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  @media (max-width: 900px) {
+    .hero { padding: 0 1.5rem 4rem; }
+    .intro { grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 1.5rem; }
+    .section-nav { padding: 1rem 1.5rem 4rem; }
+    .section-nav-grid { grid-template-columns: 1fr 1fr; gap: 2px; }
+    .gallery { padding: 2rem 1.5rem 4rem; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-item:nth-child(1) { grid-column: 1 / 3; }
+    .gallery-item:nth-child(2) { grid-column: 1 / 2; }
+    .gallery-item:nth-child(3) { grid-column: 2 / 3; }
+    .gallery-item:nth-child(4) { grid-column: 1 / 2; }
+    .gallery-item:nth-child(5) { grid-column: 2 / 3; }
+    .posts { padding: 2rem 1.5rem 5rem; }
+    .posts-grid { grid-template-columns: 1fr; gap: 2px; }
+    .quote-block { padding: 5rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">Sandalo<span>graphy</span></a>
+  <ul class="nav-links">
+    <li><a href="blog.html">Writings</a></li>
+    <li><a href="vlogs.html">Vlogs</a></li>
+    <li><a href="postcards.html">Postcards</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <p class="hero-eyebrow">Art · Culture · Wandering</p>
+  <h1 class="hero-title">Chasing<br><em>beautiful</em><br>things.</h1>
+  <p class="hero-sub">A visual journal of galleries, monuments, painted walls, and forgotten corners — told slowly and with intention.</p>
+  <a class="hero-cta" href="blog.html">Read the latest</a>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- INTRO -->
+<div class="section-divider reveal"><span>What is Sandalography</span></div>
+<section class="intro reveal">
+  <span class="intro-label">The concept</span>
+  <p class="intro-text">
+    Sandalography is a personal journal of art, culture, travel, and the quietly extraordinary. Named from <em>Chandan</em> — sandalwood — something that carries its fragrance long after it has passed. These are the places visited, the paintings lingered over, the stories worth telling slowly.
+  </p>
+</section>
+
+<!-- SECTION NAV CARDS -->
+<div class="section-divider reveal"><span>Explore</span></div>
+<section class="section-nav reveal">
+  <div class="section-nav-grid">
+
+    <a class="section-nav-card" href="blog.html">
+      <span class="section-nav-num">01</span>
+      <div class="section-nav-bottom">
+        <span class="section-nav-label">Writing</span>
+        <span class="section-nav-title">Articles &amp; Blogs</span>
+        <p class="section-nav-desc">Long reads on museums, castles, art history, cultural encounters, and the meaning behind what we see.</p>
+        <span class="section-nav-arrow">Read →</span>
+      </div>
+    </a>
+
+    <a class="section-nav-card" href="vlogs.html">
+      <span class="section-nav-num">02</span>
+      <div class="section-nav-bottom">
+        <span class="section-nav-label">Video</span>
+        <span class="section-nav-title">Vlogs</span>
+        <p class="section-nav-desc">Moving image journals from galleries, streets, and places where something remarkable happened.</p>
+        <span class="section-nav-arrow">Watch →</span>
+      </div>
+    </a>
+
+    <a class="section-nav-card" href="postcards.html">
+      <span class="section-nav-num">03</span>
+      <div class="section-nav-bottom">
+        <span class="section-nav-label">Photography</span>
+        <span class="section-nav-title">Postcards</span>
+        <p class="section-nav-desc">Photographs as postcards — single images with a thought, a memory, or a question attached.</p>
+        <span class="section-nav-arrow">View →</span>
+      </div>
+    </a>
+
+    <a class="section-nav-card" href="contact.html">
+      <span class="section-nav-num">04</span>
+      <div class="section-nav-bottom">
+        <span class="section-nav-label">Connect</span>
+        <span class="section-nav-title">Get in touch</span>
+        <p class="section-nav-desc">Find me on Instagram, send a note, or just say you were here. All correspondence welcome.</p>
+        <span class="section-nav-arrow">Contact →</span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- GALLERY -->
+<div class="section-divider reveal"><span>Recent photographs</span></div>
+<section class="gallery reveal">
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <div class="gallery-placeholder" data-label="[ Your photograph ]">
+        <div class="gallery-caption">
+          <span class="gallery-caption-loc">London, England</span>
+          <span class="gallery-caption-title">The National Gallery, Room 34</span>
+        </div>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder" data-label="[ Your photograph ]">
+        <div class="gallery-caption">
+          <span class="gallery-caption-loc">Edinburgh, Scotland</span>
+          <span class="gallery-caption-title">Castle at dusk, October</span>
+        </div>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder" data-label="[ Your photograph ]">
+        <div class="gallery-caption">
+          <span class="gallery-caption-loc">Paris, France</span>
+          <span class="gallery-caption-title">Musée d'Orsay</span>
+        </div>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder" data-label="[ Your photograph ]">
+        <div class="gallery-caption">
+          <span class="gallery-caption-loc">Portrait</span>
+          <span class="gallery-caption-title">A face in the crowd</span>
+        </div>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder" data-label="[ Your photograph ]">
+        <div class="gallery-caption">
+          <span class="gallery-caption-loc">Nature</span>
+          <span class="gallery-caption-title">Morning fog, countryside</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- POSTS -->
+<div class="section-divider reveal"><span>Recent writings</span></div>
+<section class="posts reveal">
+  <div class="posts-grid">
+    <a class="post-card" href="blog-post.html">
+      <div>
+        <span class="post-tag">Museums &amp; Galleries</span>
+        <h2 class="post-title">The strange comfort of standing before a Vermeer</h2>
+        <p class="post-excerpt">There is a painting in the Rijksmuseum that stops people in their tracks — not because it is grand, but because it is so quietly, impossibly intimate. I visited it three times in one afternoon.</p>
+      </div>
+      <div class="post-meta">
+        <span class="post-date">March 2025</span>
+        <span class="post-arrow">→</span>
+      </div>
+    </a>
+    <a class="post-card" href="blog-post.html">
+      <div>
+        <span class="post-tag">Castles</span>
+        <h2 class="post-title">Ruins hold a different kind of silence</h2>
+        <p class="post-excerpt">On visiting an English castle in mid-November, alone, in the rain.</p>
+      </div>
+      <div class="post-meta">
+        <span class="post-date">February 2025</span>
+        <span class="post-arrow">→</span>
+      </div>
+    </a>
+    <a class="post-card" href="blog-post.html">
+      <div>
+        <span class="post-tag">Travel &amp; People</span>
+        <h2 class="post-title">What strangers teach you in foreign cities</h2>
+        <p class="post-excerpt">Three conversations. Three countries. The same longing underneath.</p>
+      </div>
+      <div class="post-meta">
+        <span class="post-date">January 2025</span>
+        <span class="post-arrow">→</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<div class="quote-block reveal">
+  <span class="quote-mark">"</span>
+  <p class="quote-text">To travel is to discover that everyone is wrong about other countries.</p>
+  <span class="quote-attr">— Aldous Huxley</span>
+</div>
+
+<footer>
+  <span class="footer-logo">Sandalography</span>
+  <ul class="footer-links">
+    <li><a href="https://www.instagram.com/chandanpadhan10" target="_blank">Instagram</a></li>
+    <li><a href="blog.html">Writings</a></li>
+    <li><a href="postcards.html">Postcards</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <span class="footer-copy">© 2025 Sandalography</span>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  reveals.forEach(r => observer.observe(r));
+</script>
+</body>
+</html>

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Postcards — Sandalography</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .postcards-body { padding: 0 4rem 8rem; max-width: 1300px; margin: 0 auto; }
+
+  .postcards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .postcard {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    aspect-ratio: 4 / 3;
+    background: var(--bg3);
+  }
+
+  .postcard-img {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .postcard:nth-child(1)  .postcard-img { background: linear-gradient(135deg, #1e1810, #2a2015); }
+  .postcard:nth-child(2)  .postcard-img { background: linear-gradient(135deg, #0e1218, #151c22); }
+  .postcard:nth-child(3)  .postcard-img { background: linear-gradient(135deg, #0e1510, #161e18); }
+  .postcard:nth-child(4)  .postcard-img { background: linear-gradient(135deg, #18100e, #221614); }
+  .postcard:nth-child(5)  .postcard-img { background: linear-gradient(135deg, #10120e, #181a14); }
+  .postcard:nth-child(6)  .postcard-img { background: linear-gradient(135deg, #120e18, #1a1420); }
+  .postcard:nth-child(7)  .postcard-img { background: linear-gradient(135deg, #181210, #201816); }
+  .postcard:nth-child(8)  .postcard-img { background: linear-gradient(135deg, #0c1014, #141820); }
+  .postcard:nth-child(9)  .postcard-img { background: linear-gradient(135deg, #141210, #1c1a16); }
+
+  /* Large featured postcard */
+  .postcard.large {
+    grid-column: span 2;
+    aspect-ratio: 16 / 9;
+  }
+
+  .postcard-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(12,11,9,0.9) 0%, transparent 55%);
+    opacity: 0;
+    transition: opacity 0.4s;
+    display: flex;
+    align-items: flex-end;
+    padding: 1.2rem 1.4rem;
+  }
+
+  .postcard:hover .postcard-overlay { opacity: 1; }
+  .postcard:hover .postcard-img { transform: scale(1.04); }
+
+  .postcard-info { }
+
+  .postcard-loc {
+    display: block;
+    font-size: 0.58rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+
+  .postcard-caption {
+    font-family: var(--serif);
+    font-size: 0.95rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  /* Lightbox */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10,9,8,0.96);
+    z-index: 500;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .lightbox.open { display: flex; }
+
+  .lightbox-inner {
+    max-width: 900px;
+    width: 100%;
+  }
+
+  .lightbox-img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    background: linear-gradient(135deg, #1e1810 0%, #2a2015 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 1.5rem;
+  }
+
+  .lightbox-caption {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .lightbox-text { }
+
+  .lightbox-loc {
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .lightbox-title {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--text);
+  }
+
+  .lightbox-note {
+    font-family: var(--serif);
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--text-muted);
+    max-width: 400px;
+    line-height: 1.6;
+    text-align: right;
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 2rem;
+    right: 2.5rem;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: color 0.3s;
+    line-height: 1;
+  }
+
+  .lightbox-close:hover { color: var(--gold); }
+
+  @media (max-width: 900px) {
+    .postcards-body { padding: 0 1.5rem 5rem; }
+    .postcards-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .postcard.large { grid-column: span 2; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">Sandalo<span>graphy</span></a>
+  <ul class="nav-links">
+    <li><a href="blog.html">Writings</a></li>
+    <li><a href="vlogs.html">Vlogs</a></li>
+    <li><a href="postcards.html" class="active">Postcards</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page-header reveal">
+  <span class="page-header-eyebrow">Photography</span>
+  <h1 class="page-header-title">Post<em>cards</em></h1>
+  <p class="page-header-desc">Single images, each with a thought. Castles, paintings, people, skies, and the things between.</p>
+</div>
+
+<div class="section-divider reveal" style="margin-top:0;"><span>All photographs</span></div>
+
+<div class="postcards-body reveal">
+  <div class="postcards-grid">
+
+    <div class="postcard large" onclick="openLight('London, England', 'The Thames at dusk, looking east', 'There is a particular colour the Thames turns in late October — not quite grey, not quite gold. I stood on Waterloo Bridge for forty minutes and watched it happen.')">
+      <div class="postcard-img">[ Your photograph ]</div>
+      <div class="postcard-overlay">
+        <div class="postcard-info">
+          <span class="postcard-loc">London, England</span>
+          <span class="postcard-caption">The Thames at dusk, looking east</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="postcard" onclick="openLight('Edinburgh, Scotland', 'Castle from the Grassmarket', 'It looms whether you want it to or not.')">
+      <div class="postcard-img">[ Your photograph ]</div>
+      <div class="postcard-overlay">
+        <div class="postcard-info">
+          <span class="postcard-loc">Edinburgh, Scotland</span>
+          <span class="postcard-caption">Castle from the Grassmarket</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="postcard" onclick="openLight('Paris, France', 'Musée d\'Orsay — the great clock', 'The clocks stopped here. The light continued.')">
+      <div class="postcard-img">[ Your photograph ]</div>
+      <div class="postcard-overlay">
+        <div class="postcard-info">
+          <span class="postcard-loc">Paris, France</span>
+          <span class="postcard-caption">Musée d'Orsay — the great clock</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="postcard" onclick="openLight('Countryside, England', 'Morning fog lifting off the fields', 'Patience. Wait long enough and the world reveals itself.')">
+      <div class="postcard-img">[ Your photograph ]</div>
+      <div class="postcard-overlay">
+        <div class="postcard-info">
+          <span class="postcard-loc">Countryside, England</span>
+          <span class="postcard-caption">Morning fog lifting off the fields</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="postcard large" onclick="openLight('Amsterdam, Netherlands', 'The Rijksmuseum, Gallery of Honour', 'Two thousand people pass through here each day. Every one of them walks past something that would stop someone else entirely.')">
+      <div class="postcard-img">[ Your photograph ]</div>
+      <div class="postcard-overlay">
+        <div class="postcard-info">
+          <span class="postcard-loc">Amsterdam, Netherlands</span>
+          <span class="postcard-caption">The Rijksmuseum, Gallery of Honour</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="postcard" onclick="openLight('Unknown city', 'A face in the market', 'I did not ask her name.')">
+      <div class="postcard-img">[ Your photograph ]</div>
+      <div class="postcard-overlay">
+        <div class="postcard-info">
+          <span class="postcard-loc">Unknown city</span>
+          <span class="postcard-caption">A face in the market</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="postcard" onclick="openLight('Oxford, England', 'Bodleian Library stairwell', 'Everyone who has climbed these stairs has carried something in their hands.')">
+      <div class="postcard-img">[ Your photograph ]</div>
+      <div class="postcard-overlay">
+        <div class="postcard-info">
+          <span class="postcard-loc">Oxford, England</span>
+          <span class="postcard-caption">Bodleian Library stairwell</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="postcard" onclick="openLight('Sky, Somewhere', 'Clouds at 4pm in autumn', 'The sky is always doing something interesting. We are usually looking the wrong way.')">
+      <div class="postcard-img">[ Your photograph ]</div>
+      <div class="postcard-overlay">
+        <div class="postcard-info">
+          <span class="postcard-loc">Sky, somewhere</span>
+          <span class="postcard-caption">Clouds at 4pm in autumn</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="postcard" onclick="openLight('Bath, England', 'Roman Baths — the green water', 'The Romans came here for the heat. Two thousand years later, so do we.')">
+      <div class="postcard-img">[ Your photograph ]</div>
+      <div class="postcard-overlay">
+        <div class="postcard-info">
+          <span class="postcard-loc">Bath, England</span>
+          <span class="postcard-caption">Roman Baths — the green water</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLight(event)">
+  <button class="lightbox-close" onclick="closeLightBtn()">✕</button>
+  <div class="lightbox-inner">
+    <div class="lightbox-img">[ Your photograph ]</div>
+    <div class="lightbox-caption">
+      <div class="lightbox-text">
+        <span class="lightbox-loc" id="lb-loc">Location</span>
+        <span class="lightbox-title" id="lb-title">Caption</span>
+      </div>
+      <p class="lightbox-note" id="lb-note">Note</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span class="footer-logo">Sandalography</span>
+  <ul class="footer-links">
+    <li><a href="https://www.instagram.com/chandanpadhan10" target="_blank">Instagram</a></li>
+    <li><a href="blog.html">Writings</a></li>
+    <li><a href="postcards.html">Postcards</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <span class="footer-copy">© 2025 Sandalography</span>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  reveals.forEach(r => observer.observe(r));
+
+  function openLight(loc, title, note) {
+    document.getElementById('lb-loc').textContent = loc;
+    document.getElementById('lb-title').textContent = title;
+    document.getElementById('lb-note').textContent = note;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLight(e) {
+    if (e.target === document.getElementById('lightbox')) closeLightBtn();
+  }
+
+  function closeLightBtn() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+</script>
+</body>
+</html>

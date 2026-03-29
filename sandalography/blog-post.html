@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The strange comfort of standing before a Vermeer — Sandalography</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .post-hero {
+    position: relative;
+    height: 70vh;
+    min-height: 480px;
+    background: linear-gradient(135deg, #1e1810 0%, #2a2015 40%, #1a1510 100%);
+    display: flex;
+    align-items: flex-end;
+    padding: 0 4rem 3.5rem;
+    overflow: hidden;
+  }
+
+  .post-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(12,11,9,0.92) 0%, rgba(12,11,9,0.3) 60%, transparent 100%);
+  }
+
+  .post-hero-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  .post-hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+  }
+
+  .post-hero-tag {
+    font-size: 0.62rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.8rem;
+  }
+
+  .post-hero-title {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(2rem, 4.5vw, 3.8rem);
+    line-height: 1.1;
+    color: var(--text);
+  }
+
+  .post-hero-title em { font-style: italic; color: var(--gold-pale); }
+
+  .post-hero-meta {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1.2rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--text-faint);
+    text-transform: uppercase;
+  }
+
+  /* Article layout */
+  .article-wrap {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 5rem 2rem 4rem;
+  }
+
+  .article-body p {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--text);
+    margin-bottom: 1.8rem;
+  }
+
+  .article-body p em { font-style: italic; color: var(--gold-pale); }
+
+  .article-body .pull-quote {
+    font-family: var(--serif);
+    font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--gold-pale);
+    border-left: 2px solid var(--gold);
+    padding: 0.5rem 0 0.5rem 2rem;
+    margin: 3rem 0;
+    line-height: 1.5;
+  }
+
+  .article-body .section-break {
+    text-align: center;
+    color: var(--gold);
+    font-size: 1.2rem;
+    letter-spacing: 0.5em;
+    margin: 3rem 0;
+    opacity: 0.5;
+  }
+
+  /* Inline image */
+  .article-img {
+    width: 100%;
+    height: 360px;
+    background: linear-gradient(140deg, #1a1614 0%, #221e18 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin: 2.5rem 0 1rem;
+  }
+
+  .article-img-caption {
+    font-size: 0.7rem;
+    color: var(--text-faint);
+    letter-spacing: 0.1em;
+    font-style: italic;
+    margin-bottom: 2.5rem;
+    text-align: center;
+  }
+
+  /* Tags */
+  .article-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 3rem 0 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(74,70,64,0.3);
+  }
+
+  .article-tag {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    border: 1px solid rgba(74,70,64,0.4);
+    padding: 5px 12px;
+    transition: border-color 0.3s, color 0.3s;
+    cursor: default;
+  }
+
+  .article-tag:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── ACTIONS (Like, Share) ── */
+  .post-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 2rem 0;
+    border-top: 1px solid rgba(74,70,64,0.3);
+    border-bottom: 1px solid rgba(74,70,64,0.3);
+    margin: 1rem 0 3rem;
+  }
+
+  .action-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-right: 0.5rem;
+  }
+
+  .like-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: 1px solid rgba(74,70,64,0.4);
+    padding: 8px 16px;
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .like-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+  .like-btn.liked { border-color: var(--gold); color: var(--gold); background: rgba(196,151,74,0.08); }
+
+  .like-heart { font-size: 0.9rem; transition: transform 0.3s; }
+  .like-btn.liked .like-heart { transform: scale(1.3); }
+
+  .share-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+  }
+
+  .share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: 1px solid rgba(74,70,64,0.4);
+    padding: 8px 14px;
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .share-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+  .copy-msg {
+    font-size: 0.62rem;
+    color: var(--gold);
+    opacity: 0;
+    transition: opacity 0.3s;
+    letter-spacing: 0.1em;
+  }
+
+  .copy-msg.show { opacity: 1; }
+
+  /* ── COMMENTS ── */
+  .comments-section {
+    margin-top: 2rem;
+  }
+
+  .comments-title {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: var(--text);
+    margin-bottom: 2rem;
+  }
+
+  .comment-form {
+    background: var(--bg2);
+    padding: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .form-field label {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  .form-field input,
+  .form-field textarea {
+    background: var(--bg);
+    border: 1px solid rgba(74,70,64,0.35);
+    padding: 10px 14px;
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.3s;
+    resize: none;
+  }
+
+  .form-field input:focus,
+  .form-field textarea:focus { border-color: var(--gold); }
+
+  .form-field textarea { height: 100px; }
+
+  .form-submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 1rem;
+    background: none;
+    border: 1px solid rgba(196,151,74,0.5);
+    padding: 10px 22px;
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .form-submit:hover { background: rgba(196,151,74,0.08); border-color: var(--gold); }
+
+  /* Comment list */
+  .comment-list { display: flex; flex-direction: column; gap: 1.5rem; }
+
+  .comment-item {
+    border-left: 2px solid rgba(74,70,64,0.3);
+    padding-left: 1.5rem;
+    transition: border-color 0.3s;
+  }
+
+  .comment-item:hover { border-color: var(--gold); }
+
+  .comment-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .comment-name {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .comment-date {
+    font-size: 0.62rem;
+    color: var(--text-faint);
+    letter-spacing: 0.08em;
+  }
+
+  .comment-text {
+    font-family: var(--serif);
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--text-muted);
+  }
+
+  /* Related posts */
+  .related-section { margin-top: 5rem; padding-top: 3rem; border-top: 1px solid rgba(74,70,64,0.3); }
+
+  .related-title {
+    font-size: 0.62rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 2rem;
+  }
+
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .related-card {
+    background: var(--bg2);
+    padding: 1.8rem;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: background 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .related-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s;
+  }
+
+  .related-card:hover { background: var(--bg3); }
+  .related-card:hover::after { transform: scaleX(1); }
+
+  .related-tag { font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
+
+  .related-post-title {
+    font-family: var(--serif);
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.35;
+    color: var(--text);
+  }
+
+  .related-arrow { font-size: 0.65rem; color: var(--gold); margin-top: 0.5rem; transition: transform 0.3s; }
+  .related-card:hover .related-arrow { transform: translateX(5px); }
+
+  @media (max-width: 900px) {
+    .post-hero { padding: 0 1.5rem 2.5rem; }
+    .article-wrap { padding: 3rem 1.5rem 3rem; }
+    .form-row { grid-template-columns: 1fr; }
+    .related-grid { grid-template-columns: 1fr; }
+    .post-actions { flex-wrap: wrap; }
+    .share-group { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">Sandalo<span>graphy</span></a>
+  <ul class="nav-links">
+    <li><a href="blog.html" class="active">Writings</a></li>
+    <li><a href="vlogs.html">Vlogs</a></li>
+    <li><a href="postcards.html">Postcards</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- POST HERO -->
+<div class="post-hero">
+  <div class="post-hero-placeholder">[ Your photograph ]</div>
+  <div class="post-hero-content">
+    <span class="post-hero-tag">Museums &amp; Galleries</span>
+    <h1 class="post-hero-title">The strange comfort of<br><em>standing before a Vermeer</em></h1>
+    <div class="post-hero-meta">
+      <span>March 2025</span>
+      <span>·</span>
+      <span>8 min read</span>
+      <span>·</span>
+      <span>Amsterdam, Netherlands</span>
+    </div>
+  </div>
+</div>
+
+<!-- ARTICLE -->
+<div class="article-wrap">
+
+  <div class="article-body reveal">
+
+    <p>There is a painting in the Rijksmuseum that stops people in their tracks — not because it is grand, but because it is so quietly, impossibly intimate. <em>Woman Reading a Letter</em> by Johannes Vermeer. I visited it three times in one afternoon and each time something different caught me. The light on the tablecloth. The woman's downward glance. The complete indifference to being observed.</p>
+
+    <p>I had not planned to spend three hours in that room. Museums, like cities, rarely unfold according to plan. You walk in with an itinerary and the art rearranges it for you. You find yourself standing somewhere unexpected, and suddenly the schedule is irrelevant.</p>
+
+    <div class="pull-quote">
+      "There is a particular kind of silence in front of a painting that belongs only to that moment. It does not travel well."
+    </div>
+
+    <p>Vermeer painted domestic interiors — women at windows, at letters, at music. Small, stillborn scenes from seventeenth-century Delft. He was largely forgotten after his death and rediscovered in the nineteenth century. There are only thirty-four or thirty-five paintings reliably attributed to him in the world. Each one feels like it has been waiting for you specifically.</p>
+
+    <div class="article-img">[ Your photograph — inside the Rijksmuseum ]</div>
+    <p class="article-img-caption">The Rijksmuseum, Amsterdam — Gallery of Honour, afternoon light.</p>
+
+    <p>What I notice about standing before a very old painting is how it seems to resist the usual speed of looking. In the museum shop, everything is quick: the postcards, the audio guides, the groups moving from room to room on a schedule. But the painting has no interest in your schedule. It existed before you arrived and will continue after you have left.</p>
+
+    <div class="section-break">· · ·</div>
+
+    <p>I came back a third time because I had been walking around and thinking about the woman in the painting — who she might have been, what she was reading, whether it was good news or terrible. Vermeer gives you nothing except the light and the stillness. The speculation is entirely yours.</p>
+
+    <p>That, perhaps, is what the best art does. It refuses to complete itself. It leaves a space precisely your size, and waits.</p>
+
+  </div>
+
+  <!-- Tags -->
+  <div class="article-tags reveal">
+    <span class="article-tag">Museums</span>
+    <span class="article-tag">Vermeer</span>
+    <span class="article-tag">Amsterdam</span>
+    <span class="article-tag">Art History</span>
+    <span class="article-tag">Rijksmuseum</span>
+  </div>
+
+  <!-- LIKE & SHARE -->
+  <div class="post-actions reveal">
+    <span class="action-label">Enjoyed this?</span>
+
+    <button class="like-btn" id="likeBtn" onclick="toggleLike()">
+      <span class="like-heart">♡</span>
+      <span id="likeText">Like</span>
+      <span id="likeCount">24</span>
+    </button>
+
+    <div class="share-group">
+      <span class="action-label">Share</span>
+
+      <a class="share-btn" href="https://twitter.com/intent/tweet?text=The+strange+comfort+of+standing+before+a+Vermeer&url=https://sandalography.com/blog-post.html" target="_blank" rel="noopener">
+        𝕏 Twitter
+      </a>
+
+      <a class="share-btn" href="https://api.whatsapp.com/send?text=The+strange+comfort+of+standing+before+a+Vermeer+https://sandalography.com/blog-post.html" target="_blank" rel="noopener">
+        WhatsApp
+      </a>
+
+      <button class="share-btn" onclick="copyLink()">
+        Copy link
+      </button>
+
+      <span class="copy-msg" id="copyMsg">Copied!</span>
+    </div>
+  </div>
+
+  <!-- COMMENTS -->
+  <div class="comments-section reveal">
+    <h2 class="comments-title">Leave a thought</h2>
+
+    <div class="comment-form">
+      <div class="form-row">
+        <div class="form-field">
+          <label for="c-name">Your name</label>
+          <input type="text" id="c-name" placeholder="How shall I address you?">
+        </div>
+        <div class="form-field">
+          <label for="c-email">Email (not published)</label>
+          <input type="email" id="c-email" placeholder="your@email.com">
+        </div>
+      </div>
+      <div class="form-field">
+        <label for="c-msg">Your comment</label>
+        <textarea id="c-msg" placeholder="Share a thought, a memory, a reaction…"></textarea>
+      </div>
+      <button class="form-submit" onclick="submitComment()">Post comment →</button>
+    </div>
+
+    <div class="comment-list" id="commentList">
+
+      <div class="comment-item">
+        <div class="comment-header">
+          <span class="comment-name">Eleanor H.</span>
+          <span class="comment-date">March 2025</span>
+        </div>
+        <p class="comment-text">I had exactly this experience with the same painting last year. The way you've described the refusal to complete itself — that's exactly it. Beautifully written.</p>
+      </div>
+
+      <div class="comment-item">
+        <div class="comment-header">
+          <span class="comment-name">Rishi M.</span>
+          <span class="comment-date">March 2025</span>
+        </div>
+        <p class="comment-text">This made me want to book a flight to Amsterdam immediately. I've only ever seen Vermeer in books. The idea of standing before the real thing feels suddenly urgent.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RELATED -->
+  <div class="related-section reveal">
+    <p class="related-title">More writings</p>
+    <div class="related-grid">
+      <a class="related-card" href="blog-post.html">
+        <span class="related-tag">Castles</span>
+        <span class="related-post-title">Ruins hold a different kind of silence</span>
+        <span class="related-arrow">→</span>
+      </a>
+      <a class="related-card" href="blog-post.html">
+        <span class="related-tag">Travel &amp; People</span>
+        <span class="related-post-title">What strangers teach you in foreign cities</span>
+        <span class="related-arrow">→</span>
+      </a>
+      <a class="related-card" href="blog-post.html">
+        <span class="related-tag">Art History</span>
+        <span class="related-post-title">Why painters kept returning to the same window</span>
+        <span class="related-arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <span class="footer-logo">Sandalography</span>
+  <ul class="footer-links">
+    <li><a href="https://www.instagram.com/chandanpadhan10" target="_blank">Instagram</a></li>
+    <li><a href="blog.html">Writings</a></li>
+    <li><a href="postcards.html">Postcards</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <span class="footer-copy">© 2025 Sandalography</span>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  reveals.forEach(r => observer.observe(r));
+
+  let liked = false;
+  let count = 24;
+
+  function toggleLike() {
+    liked = !liked;
+    count += liked ? 1 : -1;
+    const btn = document.getElementById('likeBtn');
+    const heart = btn.querySelector('.like-heart');
+    const countEl = document.getElementById('likeCount');
+    const textEl = document.getElementById('likeText');
+    btn.classList.toggle('liked', liked);
+    heart.textContent = liked ? '♥' : '♡';
+    countEl.textContent = count;
+    textEl.textContent = liked ? 'Liked' : 'Like';
+  }
+
+  function copyLink() {
+    const url = window.location.href;
+    navigator.clipboard.writeText(url).then(() => {
+      const msg = document.getElementById('copyMsg');
+      msg.classList.add('show');
+      setTimeout(() => msg.classList.remove('show'), 2000);
+    });
+  }
+
+  function submitComment() {
+    const name = document.getElementById('c-name').value.trim();
+    const msg = document.getElementById('c-msg').value.trim();
+    if (!name || !msg) return;
+    const list = document.getElementById('commentList');
+    const item = document.createElement('div');
+    item.className = 'comment-item';
+    const now = new Date();
+    const month = now.toLocaleString('default', { month: 'long', year: 'numeric' });
+    item.innerHTML = `
+      <div class="comment-header">
+        <span class="comment-name">${name}</span>
+        <span class="comment-date">${month}</span>
+      </div>
+      <p class="comment-text">${msg}</p>
+    `;
+    list.prepend(item);
+    document.getElementById('c-name').value = '';
+    document.getElementById('c-msg').value = '';
+    item.style.opacity = '0';
+    item.style.transform = 'translateY(10px)';
+    item.style.transition = 'all 0.5s ease';
+    requestAnimationFrame(() => {
+      item.style.opacity = '1';
+      item.style.transform = 'translateY(0)';
+    });
+  }
+</script>
+</body>
+</html>

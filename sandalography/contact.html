@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Sandalography</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .contact-body {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 4rem 8rem;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+
+  /* Left panel */
+  .contact-left {
+    padding: 4rem 4rem 4rem 0;
+    border-right: 1px solid rgba(74,70,64,0.2);
+  }
+
+  .contact-intro {
+    font-family: var(--serif);
+    font-size: clamp(1.2rem, 2vw, 1.6rem);
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--text);
+    margin-bottom: 3rem;
+  }
+
+  .contact-intro em {
+    font-style: italic;
+    color: var(--gold-pale);
+  }
+
+  /* Social links */
+  .social-links { display: flex; flex-direction: column; gap: 2px; }
+
+  .social-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.8rem 2rem;
+    background: var(--bg2);
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .social-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s;
+  }
+
+  .social-link:hover { background: var(--bg3); }
+  .social-link:hover::after { transform: scaleX(1); }
+
+  .social-link-left { }
+
+  .social-platform {
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .social-handle {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: var(--text);
+  }
+
+  .social-arrow { font-size: 0.7rem; color: var(--gold); transition: transform 0.3s; }
+  .social-link:hover .social-arrow { transform: translateX(6px); }
+
+  /* Email block */
+  .email-block {
+    background: var(--bg2);
+    padding: 2rem;
+    margin-bottom: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .email-left { }
+
+  .email-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .email-address {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .email-address:hover { color: var(--gold); }
+
+  .email-copy-btn {
+    background: none;
+    border: 1px solid rgba(74,70,64,0.4);
+    padding: 7px 14px;
+    font-family: var(--sans);
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    cursor: pointer;
+    transition: all 0.3s;
+    white-space: nowrap;
+  }
+
+  .email-copy-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .email-copy-btn.copied { border-color: var(--gold); color: var(--gold); }
+
+  /* Right panel — form */
+  .contact-right { padding: 4rem 0 4rem 4rem; }
+
+  .form-heading {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: var(--text);
+    margin-bottom: 2rem;
+  }
+
+  .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+
+  .cf-field { display: flex; flex-direction: column; gap: 7px; }
+
+  .cf-field label {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  .cf-field input,
+  .cf-field textarea,
+  .cf-field select {
+    background: var(--bg2);
+    border: 1px solid rgba(74,70,64,0.35);
+    padding: 12px 16px;
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    font-weight: 300;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.3s;
+    resize: none;
+    appearance: none;
+  }
+
+  .cf-field input::placeholder,
+  .cf-field textarea::placeholder { color: var(--text-faint); }
+
+  .cf-field input:focus,
+  .cf-field textarea:focus,
+  .cf-field select:focus { border-color: var(--gold); }
+
+  .cf-field textarea { height: 130px; }
+
+  .cf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .form-submit-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    align-self: flex-start;
+    margin-top: 0.5rem;
+    background: none;
+    border: 1px solid rgba(196,151,74,0.5);
+    padding: 12px 24px;
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .form-submit-btn:hover { background: rgba(196,151,74,0.08); border-color: var(--gold); }
+
+  .form-success {
+    display: none;
+    font-family: var(--serif);
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--gold-pale);
+    padding: 1.5rem;
+    border: 1px solid rgba(196,151,74,0.2);
+    line-height: 1.65;
+  }
+
+  /* Note */
+  .contact-note {
+    margin-top: 4rem;
+    padding-top: 3rem;
+    border-top: 1px solid rgba(74,70,64,0.2);
+    font-family: var(--serif);
+    font-size: 1rem;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.8;
+    text-align: center;
+  }
+
+  @media (max-width: 900px) {
+    .contact-body { padding: 0 1.5rem 5rem; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .contact-left { padding: 2rem 0; border-right: none; border-bottom: 1px solid rgba(74,70,64,0.2); }
+    .contact-right { padding: 2.5rem 0 2rem; }
+    .cf-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">Sandalo<span>graphy</span></a>
+  <ul class="nav-links">
+    <li><a href="blog.html">Writings</a></li>
+    <li><a href="vlogs.html">Vlogs</a></li>
+    <li><a href="postcards.html">Postcards</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page-header reveal">
+  <span class="page-header-eyebrow">Connect</span>
+  <h1 class="page-header-title">Get in<br><em>touch</em></h1>
+  <p class="page-header-desc">For collaborations, questions, or simply to say you were here — all correspondence is welcome and read personally.</p>
+</div>
+
+<div class="section-divider reveal" style="margin-top:0;"><span>Reach me</span></div>
+
+<div class="contact-body reveal">
+  <div class="contact-grid">
+
+    <!-- LEFT -->
+    <div class="contact-left">
+      <p class="contact-intro">
+        Sandalography is a solo undertaking — just one person, their camera, and a notebook. If something here has <em>moved, intrigued, or resonated</em>, I would genuinely like to hear about it.
+      </p>
+
+      <!-- Email -->
+      <div class="social-links">
+        <div class="email-block">
+          <div class="email-left">
+            <span class="email-label">Email</span>
+            <a class="email-address" href="mailto:sandalocorporate@outlook.com">sandalocorporate@outlook.com</a>
+          </div>
+          <button class="email-copy-btn" id="emailCopyBtn" onclick="copyEmail()">Copy</button>
+        </div>
+
+        <!-- Instagram -->
+        <a class="social-link" href="https://www.instagram.com/chandanpadhan10" target="_blank" rel="noopener">
+          <div class="social-link-left">
+            <span class="social-platform">Instagram</span>
+            <span class="social-handle">@chandanpadhan10</span>
+          </div>
+          <span class="social-arrow">→</span>
+        </a>
+
+        <!-- Tumblr placeholder -->
+        <a class="social-link" href="#" target="_blank" rel="noopener">
+          <div class="social-link-left">
+            <span class="social-platform">Tumblr</span>
+            <span class="social-handle">Coming soon</span>
+          </div>
+          <span class="social-arrow">→</span>
+        </a>
+
+      </div>
+
+      <p class="contact-note" style="text-align:left; margin-top:2.5rem; padding-top:2rem;">
+        All emails are read and replied to personally. I do not work with automated responses or PR enquiries. If you write, a human being will write back.
+      </p>
+    </div>
+
+    <!-- RIGHT — Contact form -->
+    <div class="contact-right">
+      <h2 class="form-heading">Send a message</h2>
+
+      <div class="contact-form" id="contactForm">
+
+        <div class="cf-row">
+          <div class="cf-field">
+            <label for="cf-name">Your name</label>
+            <input type="text" id="cf-name" placeholder="Your name">
+          </div>
+          <div class="cf-field">
+            <label for="cf-email">Your email</label>
+            <input type="email" id="cf-email" placeholder="your@email.com">
+          </div>
+        </div>
+
+        <div class="cf-field">
+          <label for="cf-subject">Subject</label>
+          <select id="cf-subject">
+            <option value="" disabled selected>What is this about?</option>
+            <option value="general">General hello</option>
+            <option value="collaboration">Collaboration enquiry</option>
+            <option value="feedback">Feedback on a piece</option>
+            <option value="other">Something else</option>
+          </select>
+        </div>
+
+        <div class="cf-field">
+          <label for="cf-msg">Your message</label>
+          <textarea id="cf-msg" placeholder="Write freely — there are no forms to fill here, only a message to send."></textarea>
+        </div>
+
+        <button class="form-submit-btn" onclick="sendMessage()">Send message →</button>
+      </div>
+
+      <div class="form-success" id="formSuccess">
+        Thank you for writing. Your message has been received — I will reply as soon as I can, usually within a few days.
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <span class="footer-logo">Sandalography</span>
+  <ul class="footer-links">
+    <li><a href="https://www.instagram.com/chandanpadhan10" target="_blank">Instagram</a></li>
+    <li><a href="blog.html">Writings</a></li>
+    <li><a href="postcards.html">Postcards</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <span class="footer-copy">© 2025 Sandalography</span>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  reveals.forEach(r => observer.observe(r));
+
+  function copyEmail() {
+    navigator.clipboard.writeText('sandalocorporate@outlook.com').then(() => {
+      const btn = document.getElementById('emailCopyBtn');
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2500);
+    });
+  }
+
+  function sendMessage() {
+    const name = document.getElementById('cf-name').value.trim();
+    const email = document.getElementById('cf-email').value.trim();
+    const msg = document.getElementById('cf-msg').value.trim();
+    if (!name || !email || !msg) return;
+
+    // Compose mailto link as fallback (opens email client)
+    const subject = document.getElementById('cf-subject').value || 'Message from Sandalography';
+    const body = encodeURIComponent(`Name: ${name}\n\n${msg}`);
+    window.location.href = `mailto:sandalocorporate@outlook.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+
+    document.getElementById('contactForm').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  }
+</script>
+</body>
+</html>

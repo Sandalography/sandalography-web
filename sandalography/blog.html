@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Writings — Sandalography</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .blog-body { padding: 0 4rem 8rem; max-width: 1300px; margin: 0 auto; }
+
+  /* Filter tabs */
+  .filter-bar {
+    display: flex;
+    gap: 0;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid rgba(74,70,64,0.25);
+  }
+
+  .filter-btn {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 0.9rem 1.4rem;
+    margin-bottom: -1px;
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    cursor: pointer;
+    transition: color 0.3s, border-color 0.3s;
+  }
+
+  .filter-btn.active,
+  .filter-btn:hover { color: var(--gold); border-bottom-color: var(--gold); }
+
+  /* Featured post */
+  .featured-post {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 0;
+    background: var(--bg2);
+    margin-bottom: 2px;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .featured-post::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s;
+  }
+
+  .featured-post:hover { background: var(--bg3); }
+  .featured-post:hover::after { transform: scaleX(1); }
+
+  .featured-img {
+    min-height: 380px;
+    background: linear-gradient(135deg, #1e1810 0%, #2a2015 40%, #1a1510 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .featured-img-label {
+    position: absolute;
+    top: 1.2rem; left: 1.2rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: rgba(12,11,9,0.7);
+    padding: 5px 10px;
+  }
+
+  .featured-content {
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .featured-tag {
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .featured-title {
+    font-family: var(--serif);
+    font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+    font-weight: 300;
+    line-height: 1.25;
+    color: var(--text);
+    margin-top: 0.8rem;
+  }
+
+  .featured-excerpt {
+    font-size: 0.8rem;
+    line-height: 1.85;
+    color: var(--text-muted);
+    margin-top: 1rem;
+  }
+
+  .featured-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid rgba(74,70,64,0.3);
+  }
+
+  .featured-date { font-size: 0.62rem; letter-spacing: 0.15em; color: var(--text-faint); }
+  .featured-arrow { font-size: 0.7rem; color: var(--gold); transition: transform 0.3s; }
+  .featured-post:hover .featured-arrow { transform: translateX(6px); }
+
+  /* Post grid */
+  .posts-grid-listing {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 2px;
+  }
+
+  .post-listing-card {
+    background: var(--bg2);
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    transition: background 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .post-listing-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s;
+  }
+
+  .post-listing-card:hover { background: var(--bg3); }
+  .post-listing-card:hover::after { transform: scaleX(1); }
+
+  .post-listing-img {
+    height: 200px;
+    background: var(--bg3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    overflow: hidden;
+  }
+
+  .post-listing-card:nth-child(1) .post-listing-img { background: linear-gradient(140deg, #0e1218 0%, #151c22 100%); }
+  .post-listing-card:nth-child(2) .post-listing-img { background: linear-gradient(140deg, #1c1510 0%, #241a0e 100%); }
+  .post-listing-card:nth-child(3) .post-listing-img { background: linear-gradient(140deg, #0e1510 0%, #161e18 100%); }
+  .post-listing-card:nth-child(4) .post-listing-img { background: linear-gradient(140deg, #18100e 0%, #201614 100%); }
+  .post-listing-card:nth-child(5) .post-listing-img { background: linear-gradient(140deg, #10120e 0%, #181a14 100%); }
+  .post-listing-card:nth-child(6) .post-listing-img { background: linear-gradient(140deg, #120e18 0%, #1a1420 100%); }
+
+  .post-listing-content { padding: 1.8rem; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+
+  .post-listing-tag {
+    font-size: 0.58rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .post-listing-title {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    font-weight: 300;
+    line-height: 1.35;
+    color: var(--text);
+    margin-top: 0.6rem;
+  }
+
+  .post-listing-excerpt {
+    font-size: 0.72rem;
+    line-height: 1.8;
+    color: var(--text-muted);
+    margin-top: 0.6rem;
+  }
+
+  .post-listing-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(74,70,64,0.25);
+  }
+
+  .post-listing-date { font-size: 0.6rem; letter-spacing: 0.12em; color: var(--text-faint); }
+  .post-listing-arrow { font-size: 0.68rem; color: var(--gold); transition: transform 0.3s; }
+  .post-listing-card:hover .post-listing-arrow { transform: translateX(5px); }
+
+  @media (max-width: 900px) {
+    .blog-body { padding: 0 1.5rem 5rem; }
+    .featured-post { grid-template-columns: 1fr; }
+    .featured-img { min-height: 220px; }
+    .posts-grid-listing { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">Sandalo<span>graphy</span></a>
+  <ul class="nav-links">
+    <li><a href="blog.html" class="active">Writings</a></li>
+    <li><a href="vlogs.html">Vlogs</a></li>
+    <li><a href="postcards.html">Postcards</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page-header reveal">
+  <span class="page-header-eyebrow">Writing</span>
+  <h1 class="page-header-title">Articles &amp;<br><em>Blogs</em></h1>
+  <p class="page-header-desc">Long reads on art, culture, museums, history, and the meaning of the places we find ourselves in.</p>
+</div>
+
+<div class="section-divider reveal" style="margin-top:0;"><span>All writings</span></div>
+
+<div class="blog-body reveal">
+
+  <!-- Filter bar -->
+  <div class="filter-bar">
+    <button class="filter-btn active">All</button>
+    <button class="filter-btn">Museums</button>
+    <button class="filter-btn">Castles</button>
+    <button class="filter-btn">Travel</button>
+    <button class="filter-btn">Art</button>
+    <button class="filter-btn">Nature</button>
+  </div>
+
+  <!-- Featured post -->
+  <a class="featured-post" href="blog-post.html">
+    <div class="featured-img">
+      [ Your photograph ]
+      <span class="featured-img-label">Featured</span>
+    </div>
+    <div class="featured-content">
+      <div>
+        <span class="featured-tag">Museums &amp; Galleries</span>
+        <h2 class="featured-title">The strange comfort of standing before a Vermeer</h2>
+        <p class="featured-excerpt">There is a painting in the Rijksmuseum that stops people in their tracks — not because it is grand, but because it is so quietly, impossibly intimate. I visited it three times in one afternoon and each time something different caught me. The light on the tablecloth. The woman's downward glance. The complete indifference to being observed.</p>
+      </div>
+      <div class="featured-meta">
+        <span class="featured-date">March 2025 · 8 min read</span>
+        <span class="featured-arrow">→</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- Post grid -->
+  <div class="posts-grid-listing">
+
+    <a class="post-listing-card" href="blog-post.html">
+      <div class="post-listing-img">[ Your photograph ]</div>
+      <div class="post-listing-content">
+        <div>
+          <span class="post-listing-tag">Castles</span>
+          <h3 class="post-listing-title">Ruins hold a different kind of silence</h3>
+          <p class="post-listing-excerpt">On visiting an English castle in mid-November, alone, in the rain.</p>
+        </div>
+        <div class="post-listing-meta">
+          <span class="post-listing-date">Feb 2025 · 6 min</span>
+          <span class="post-listing-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="post-listing-card" href="blog-post.html">
+      <div class="post-listing-img">[ Your photograph ]</div>
+      <div class="post-listing-content">
+        <div>
+          <span class="post-listing-tag">Travel &amp; People</span>
+          <h3 class="post-listing-title">What strangers teach you in foreign cities</h3>
+          <p class="post-listing-excerpt">Three conversations. Three countries. The same longing underneath.</p>
+        </div>
+        <div class="post-listing-meta">
+          <span class="post-listing-date">Jan 2025 · 5 min</span>
+          <span class="post-listing-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="post-listing-card" href="blog-post.html">
+      <div class="post-listing-img">[ Your photograph ]</div>
+      <div class="post-listing-content">
+        <div>
+          <span class="post-listing-tag">Art History</span>
+          <h3 class="post-listing-title">Why painters kept returning to the same window</h3>
+          <p class="post-listing-excerpt">On light, framing, and the window as a recurring obsession in Western art.</p>
+        </div>
+        <div class="post-listing-meta">
+          <span class="post-listing-date">Dec 2024 · 7 min</span>
+          <span class="post-listing-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="post-listing-card" href="blog-post.html">
+      <div class="post-listing-img">[ Your photograph ]</div>
+      <div class="post-listing-content">
+        <div>
+          <span class="post-listing-tag">Nature</span>
+          <h3 class="post-listing-title">The fog came in from the east and changed everything</h3>
+          <p class="post-listing-excerpt">A morning walk in the countryside that turned into something I didn't expect.</p>
+        </div>
+        <div class="post-listing-meta">
+          <span class="post-listing-date">Nov 2024 · 4 min</span>
+          <span class="post-listing-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="post-listing-card" href="blog-post.html">
+      <div class="post-listing-img">[ Your photograph ]</div>
+      <div class="post-listing-content">
+        <div>
+          <span class="post-listing-tag">Museums</span>
+          <h3 class="post-listing-title">The V&amp;A at closing time</h3>
+          <p class="post-listing-excerpt">When the crowds leave and the light changes, the museum becomes something else entirely.</p>
+        </div>
+        <div class="post-listing-meta">
+          <span class="post-listing-date">Oct 2024 · 5 min</span>
+          <span class="post-listing-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="post-listing-card" href="blog-post.html">
+      <div class="post-listing-img">[ Your photograph ]</div>
+      <div class="post-listing-content">
+        <div>
+          <span class="post-listing-tag">Travel</span>
+          <h3 class="post-listing-title">On arriving in a city where no one knows your name</h3>
+          <p class="post-listing-excerpt">There is a freedom in anonymity that is hard to describe and easy to miss when it's gone.</p>
+        </div>
+        <div class="post-listing-meta">
+          <span class="post-listing-date">Sep 2024 · 6 min</span>
+          <span class="post-listing-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<footer>
+  <span class="footer-logo">Sandalography</span>
+  <ul class="footer-links">
+    <li><a href="https://www.instagram.com/chandanpadhan10" target="_blank">Instagram</a></li>
+    <li><a href="blog.html">Writings</a></li>
+    <li><a href="postcards.html">Postcards</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <span class="footer-copy">© 2025 Sandalography</span>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  reveals.forEach(r => observer.observe(r));
+
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
